@@ -1,0 +1,131 @@
+
+/* Notte nel cortile: fuliggine, luce al sodio, mattone, osso. */
+:root {
+  --fuliggine: #0e0c0a;
+  --fuliggine-2: #1a1612;
+  --sodio: #ffa24a;
+  --sodio-scuro: #c26a1e;
+  --mattone: #8a3b22;
+  --osso: #f1ece2;
+  --osso-2: #c9bfb0;
+  --linea: rgba(241, 236, 226, 0.14);
+  --stencil: "Big Shoulders Stencil Display", "Helvetica Neue", sans-serif;
+  --testo: "Big Shoulders Text", "Helvetica Neue", sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--fuliggine); color: var(--osso); font-family: var(--testo); font-size: 17px; }
+::selection { background: var(--sodio); color: var(--fuliggine); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--sodio); outline-offset: 3px; }
+
+#scena { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+/* vista leggera: prima dell'accensione il pannello resta in penombra dietro il titolo */
+body[data-scena="leggera"] #scena { opacity: 0.28; transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+body[data-scena="leggera"].accesa #scena { opacity: 1; }
+
+/* ---------- avvio: il primo sguardo è il cortile, una sola azione ---------- */
+#avvio {
+  position: fixed; left: clamp(20px, 6vw, 96px); bottom: clamp(28px, 9vh, 120px);
+  max-width: min(560px, calc(100vw - 40px));
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#avvio.via { opacity: 0; transform: translateY(18px); pointer-events: none; }
+#avvio h1 { margin: 0 0 18px; line-height: 0.82; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6); }
+#avvio .nome { display: block; font-family: var(--stencil); font-weight: 900; font-size: clamp(64px, 11vw, 150px); letter-spacing: -0.01em; color: var(--osso); text-transform: uppercase; }
+#avvio .sotto { display: block; font-family: var(--stencil); font-weight: 600; font-size: clamp(26px, 3.6vw, 48px); color: var(--sodio); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+#avvio p { margin: 0 0 26px; font-size: 19px; line-height: 1.4; color: var(--osso-2); max-width: 44ch; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); }
+#avvio p.nota { margin: 18px 0 0; font-size: 15px; }
+#accendi {
+  font-family: var(--stencil); font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em;
+  background: var(--sodio); color: var(--fuliggine); border: 0; padding: 16px 28px 14px; cursor: pointer;
+  box-shadow: 0 10px 36px rgba(255, 140, 40, 0.28), 0 2px 0 var(--sodio-scuro);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+}
+#accendi:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(255, 140, 40, 0.38), 0 2px 0 var(--sodio-scuro); }
+#accendi:disabled { opacity: 0.6; cursor: progress; transform: none; }
+
+/* ---------- marchio e inquadrature ---------- */
+#marchio { position: fixed; top: 18px; left: 22px; font-family: var(--stencil); text-transform: uppercase; pointer-events: none; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8); }
+#marchio .nome { font-weight: 900; font-size: 30px; }
+#marchio .sotto { font-weight: 600; font-size: 18px; color: var(--sodio); letter-spacing: 0.05em; }
+
+#viste { position: fixed; top: 16px; right: 18px; display: flex; gap: 2px; background: rgba(14, 12, 10, 0.72); padding: 3px; border: 1px solid var(--linea); }
+#viste button { background: transparent; border: 0; padding: 7px 14px 6px; cursor: pointer; font-family: var(--stencil); font-weight: 600; font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--osso-2); }
+#viste a { padding: 7px 14px 6px; font-family: var(--stencil); font-weight: 600; font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--sodio); text-decoration: none; }
+#viste button:hover, #viste a:hover { color: var(--osso); }
+#viste a.consigliata { background: var(--sodio); color: var(--fuliggine); }
+#viste button[aria-pressed="true"] { background: var(--osso); color: var(--fuliggine); }
+
+/* ---------- barra dei deck ---------- */
+#barra {
+  position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 14px; align-items: stretch;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(14, 12, 10, 0.94), rgba(14, 12, 10, 0.78));
+  border-top: 1px solid var(--linea);
+}
+#deck { flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.deck { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; padding: 7px 9px 9px; background: var(--fuliggine-2); border: 1px solid transparent; min-width: 0; }
+.deck.bersaglio { border-color: var(--sodio); background: #2a1d10; }
+.deck .num { font-family: var(--stencil); font-weight: 900; font-size: 22px; color: var(--sodio); line-height: 1; }
+.deck .titolo { min-width: 0; }
+.deck .titolo strong { display: block; font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.deck .titolo span { display: block; font-size: 13px; color: var(--osso-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.deck .azioni { display: flex; gap: 4px; }
+.deck button, #trasporto button { background: transparent; border: 1px solid var(--linea); padding: 5px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.deck button:hover, #trasporto button:hover { border-color: var(--osso-2); }
+.deck svg, #trasporto svg { width: 15px; height: 15px; fill: currentColor; }
+.deck .corsa { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(241, 236, 226, 0.08); }
+.deck .corsa i { display: block; height: 100%; width: 0; background: var(--sodio); }
+.deck .livello { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--sodio); transform-origin: bottom; transform: scaleY(0); }
+.deck .vuoto { color: var(--osso-2); }
+button[aria-pressed="false"] .icona-pausa, button[aria-pressed="true"] .icona-play { display: none; }
+
+#trasporto { display: flex; gap: 6px; align-items: center; }
+#trasporto button { padding: 9px 12px; font-family: var(--stencil); font-weight: 600; font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; height: 100%; }
+#trasporto button[aria-pressed="true"], #trasporto button[aria-expanded="true"] { background: var(--osso); color: var(--fuliggine); border-color: var(--osso); }
+#trasporto #tutti { min-width: 92px; justify-content: center; }
+#trasporto #tutti[aria-pressed="false"] { background: var(--sodio); color: var(--fuliggine); border-color: var(--sodio); }
+
+/* ---------- selettori del prototipo ---------- */
+#prototipo, #tracce {
+  position: fixed; top: 64px; right: 18px; width: min(340px, calc(100vw - 36px)); max-height: calc(100vh - 160px); overflow-y: auto;
+  background: rgba(14, 12, 10, 0.94); border: 1px solid var(--linea); padding: 18px 18px 8px;
+  scrollbar-color: var(--sodio-scuro) transparent; scrollbar-width: thin;
+}
+#prototipo h2, #tracce h2 { margin: 0 0 6px; font-family: var(--stencil); font-weight: 900; font-size: 26px; text-transform: uppercase; }
+#prototipo > p, #tracce > p { margin: 0 0 16px; font-size: 14px; line-height: 1.4; color: var(--osso-2); }
+#elenco-tracce { display: grid; gap: 3px; margin: 8px 0 14px; }
+#elenco-tracce button { display: block; width: 100%; text-align: left; padding: 8px 10px; background: var(--fuliggine-2); border: 1px solid var(--linea); cursor: pointer; }
+#elenco-tracce button:hover { border-color: var(--osso-2); }
+#elenco-tracce button:disabled { cursor: progress; opacity: 0.6; }
+#elenco-tracce strong { display: block; font-weight: 600; font-size: 17px; }
+#elenco-tracce small { display: block; font-size: 14px; color: var(--osso-2); font-variant-numeric: tabular-nums; }
+#elenco-tracce button[aria-pressed="true"] { background: var(--sodio); border-color: var(--sodio); color: var(--fuliggine); }
+#elenco-tracce button[aria-pressed="true"] small { color: var(--fuliggine); }
+.selettore { margin: 0 0 14px; }
+.selettore label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 5px; letter-spacing: 0.02em; }
+.selettore .scelte { display: flex; flex-wrap: wrap; gap: 3px; }
+.selettore button { background: var(--fuliggine-2); border: 1px solid var(--linea); padding: 5px 9px; cursor: pointer; font-size: 14px; }
+.selettore button[aria-pressed="true"] { background: var(--sodio); color: var(--fuliggine); border-color: var(--sodio); font-weight: 600; }
+.selettore small { display: block; margin-top: 4px; font-size: 13px; color: var(--osso-2); line-height: 1.35; }
+
+/* ---------- suggerimento e stato ---------- */
+#suggerimento {
+  position: fixed; pointer-events: none; z-index: 5; padding: 6px 10px 5px; background: var(--osso); color: var(--fuliggine);
+  font-weight: 600; font-size: 15px; white-space: nowrap; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); font-variant-numeric: tabular-nums;
+}
+#stato { position: fixed; left: 22px; top: 58px; font-size: 14px; color: var(--sodio); text-shadow: 0 1px 8px #000; pointer-events: none; }
+#rilascia { position: fixed; inset: 0; display: grid; place-items: center; font-family: var(--stencil); font-weight: 900; font-size: 48px; text-transform: uppercase; color: var(--sodio); background: rgba(14, 12, 10, 0.4); pointer-events: none; }
+
+@media (max-width: 860px) {
+  #barra { flex-direction: column; }
+  #deck { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #viste button, #viste a { padding: 6px 9px; font-size: 15px; }
+  #marchio { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #avvio, #accendi, body[data-scena="leggera"] #scena { transition: none; }
+}

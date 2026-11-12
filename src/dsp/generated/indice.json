@@ -1,0 +1,706 @@
+{
+ "MC-CHANNEL": {
+  "nome": "MC-CHANNEL",
+  "processore": "mc-channel",
+  "params": [
+   {
+    "nome": "gain",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "low",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "lowmid",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "midhigh",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "high",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "fader",
+    "def": 100,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "incroci",
+    "def": 0,
+    "min": 0,
+    "max": 2
+   },
+   {
+    "nome": "curva",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "eqtipo",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-CHANNEL-S": {
+  "nome": "MC-CHANNEL-S",
+  "processore": "mc-channel-s",
+  "params": [
+   {
+    "nome": "gain",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "low",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "lowmid",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "midhigh",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "high",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "fader",
+    "def": 100,
+    "min": 0,
+    "max": 100
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-SEND": {
+  "nome": "MC-SEND",
+  "processore": "mc-send",
+  "params": [
+   {
+    "nome": "low",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "high",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "level",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "as1",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "as2",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "as3",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "as4",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   }
+  ],
+  "uscite": 5,
+  "meter": 0
+ },
+ "MC-FILTRO": {
+  "nome": "MC-FILTRO",
+  "processore": "mc-filtro",
+  "params": [
+   {
+    "nome": "freq_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "res_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "drive_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "freq_lp",
+    "def": 100,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "res_lp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "drive_lp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "modo",
+    "def": 1,
+    "min": 0,
+    "max": 2
+   },
+   {
+    "nome": "lim",
+    "def": 0,
+    "min": 0,
+    "max": 2
+   },
+   {
+    "nome": "core",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "pend",
+    "def": 0,
+    "min": 0,
+    "max": 2
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-FILTRO-S": {
+  "nome": "MC-FILTRO-S",
+  "processore": "mc-filtro-s",
+  "params": [
+   {
+    "nome": "freq_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "res_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "drive_hp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "freq_lp",
+    "def": 100,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "res_lp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "drive_lp",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "modo",
+    "def": 1,
+    "min": 0,
+    "max": 2
+   },
+   {
+    "nome": "lim",
+    "def": 0,
+    "min": 0,
+    "max": 2
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-5WAY": {
+  "nome": "MC-5WAY",
+  "processore": "mc-5way",
+  "params": [
+   {
+    "nome": "k_sub",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_kick",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_mid",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_high",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_super",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "g_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "growl",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "nastro",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "xo",
+    "def": 0,
+    "min": 0,
+    "max": 4
+   },
+   {
+    "nome": "gv",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "nver",
+    "def": 0,
+    "min": 0,
+    "max": 4
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-5WAY-S": {
+  "nome": "MC-5WAY-S",
+  "processore": "mc-5way-s",
+  "params": [
+   {
+    "nome": "k_sub",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_kick",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_mid",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_high",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "k_super",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   },
+   {
+    "nome": "g_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "g_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "p_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_1",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_2",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_3",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_4",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "w_5",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "growl",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "nastro",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   }
+  ],
+  "uscite": 1,
+  "meter": 0
+ },
+ "MC-RET": {
+  "nome": "MC-RET",
+  "processore": "mc-ret",
+  "params": [
+   {
+    "nome": "gain",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "low",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "high",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "rr1",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "rr2",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "rr3",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "rr4",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   }
+  ],
+  "uscite": 5,
+  "meter": 2
+ },
+ "MC-MIC": {
+  "nome": "MC-MIC",
+  "processore": "mc-mic",
+  "params": [
+   {
+    "nome": "gain",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "low",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "high",
+    "def": 50,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "snd1",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "snd2",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "snd3",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "snd4",
+    "def": 0,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "mute",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   }
+  ],
+  "uscite": 5,
+  "meter": 1
+ },
+ "MC-MASTER": {
+  "nome": "MC-MASTER",
+  "processore": "mc-master",
+  "params": [
+   {
+    "nome": "level",
+    "def": 80,
+    "min": 0,
+    "max": 100
+   },
+   {
+    "nome": "mono",
+    "def": 0,
+    "min": 0,
+    "max": 1
+   }
+  ],
+  "uscite": 1,
+  "meter": 4
+ }
+}

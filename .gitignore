@@ -1,0 +1,10 @@
+immagini/png/
+node_modules/
+dist/
+test/esito*.json
+test/esito*.txt
+immagini/log/
+.wrangler/
+.venv-stem/
+public/audio/
+stem/

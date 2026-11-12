@@ -1,0 +1,24 @@
+{
+  "name": "maelcum-soundsystem",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "gen": "node scripts/gen2worklet.mjs",
+    "test": "node test/dsp.test.mjs && node --experimental-transform-types --no-warnings test/pedali.test.mjs && node --no-warnings test/vie.test.mjs && sh test/stem.test.sh",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4174",
+    "qa": "node tools/qa.mjs"
+  },
+  "dependencies": {
+    "@fontsource/big-shoulders-stencil-display": "^5.3.0",
+    "@fontsource/big-shoulders-text": "^5.3.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

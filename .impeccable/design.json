@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T08:17:17+00:00",
+  "title": "Design System: Maelcum Soundsystem",
+  "extensions": {
+    "colorMeta": {
+      "fuliggine": {
+        "role": "neutral",
+        "displayName": "Fuliggine",
+        "canonical": "#0e0c0a",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#272523",
+          "#44413f",
+          "#63615e",
+          "#85827f",
+          "#a7a4a2",
+          "#cac9c7",
+          "#efeeee"
+        ]
+      },
+      "fuliggine-2": {
+        "role": "neutral",
+        "displayName": "Fuliggine calda",
+        "canonical": "#1a1612",
+        "tonalRamp": [
+          "#0d0b09",
+          "#282421",
+          "#46413c",
+          "#65605b",
+          "#87817c",
+          "#a9a49f",
+          "#ccc8c5",
+          "#efeeed"
+        ]
+      },
+      "sodio": {
+        "role": "primary",
+        "displayName": "Luce al sodio",
+        "canonical": "#ffa24a",
+        "tonalRamp": [
+          "#200000",
+          "#4b0900",
+          "#752400",
+          "#9b4600",
+          "#c06900",
+          "#de914b",
+          "#f3bd90",
+          "#feeadb"
+        ]
+      },
+      "sodio-scuro": {
+        "role": "primary",
+        "displayName": "Sodio bruciato",
+        "canonical": "#c26a1e",
+        "tonalRamp": [
+          "#200000",
+          "#4b0900",
+          "#752400",
+          "#9a4600",
+          "#c0681b",
+          "#dd9059",
+          "#f3bc97",
+          "#feeadd"
+        ]
+      },
+      "mattone": {
+        "role": "secondary",
+        "displayName": "Mattone",
+        "canonical": "#8a3b22",
+        "tonalRamp": [
+          "#1f0100",
+          "#480c00",
+          "#71250b",
+          "#96462d",
+          "#bc684e",
+          "#da9079",
+          "#f0bbaa",
+          "#fdeae4"
+        ]
+      },
+      "osso": {
+        "role": "neutral",
+        "displayName": "Osso",
+        "canonical": "#f1ece2",
+        "tonalRamp": [
+          "#0d0b08",
+          "#28251f",
+          "#45423a",
+          "#656158",
+          "#868279",
+          "#a8a59d",
+          "#ccc9c3",
+          "#efeeec"
+        ]
+      },
+      "osso-2": {
+        "role": "neutral",
+        "displayName": "Osso sporco",
+        "canonical": "#c9bfb0",
+        "tonalRamp": [
+          "#0e0b06",
+          "#2a241b",
+          "#494134",
+          "#696052",
+          "#8a8173",
+          "#aca497",
+          "#cec8c0",
+          "#f0eeeb"
+        ]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Filo",
+        "canonical": "rgba(241, 236, 226, 0.14)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Il nome maelcum all'avvio."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "soundsystem sotto il nome."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Pulsante Accendi e titolo del Prototipo."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Inquadrature e trasporto."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Testo d'avvio e titoli dei deck."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Note, tempi e spiegazioni dei selettori."
+      }
+    },
+    "shadows": [
+      {
+        "name": "stacco-testo",
+        "value": "0 2px 12px rgba(0, 0, 0, 0.8)",
+        "purpose": "text-shadow del testo sulla scena."
+      },
+      {
+        "name": "alone-sodio",
+        "value": "0 10px 36px rgba(255, 140, 40, 0.28), 0 2px 0 #c26a1e",
+        "purpose": "Pulsante Accendi."
+      },
+      {
+        "name": "suggerimento",
+        "value": "0 8px 24px rgba(0, 0, 0, 0.45)",
+        "purpose": "Etichetta del valore."
+      }
+    ],
+    "motion": [
+      {
+        "name": "uscita-avvio",
+        "value": "0.9s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Uscita del blocco d'avvio."
+      },
+      {
+        "name": "hover-accendi",
+        "value": "0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Hover del pulsante Accendi."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stretto",
+        "value": "860px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pulsante Accendi",
+      "kind": "button",
+      "refersTo": "button-accendi",
+      "description": "L'unica azione del primo sguardo.",
+      "html": "<button class=\"ds-accendi\">Accendi l'impianto</button>",
+      "css": ".ds-accendi{font-family:\"Big Shoulders Stencil Display\",\"Helvetica Neue\",sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.03em;background:#ffa24a;color:#0e0c0a;border:0;padding:16px 28px 14px;cursor:pointer;box-shadow:0 10px 36px rgba(255,140,40,.28),0 2px 0 #c26a1e;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s}.ds-accendi:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(255,140,40,.38),0 2px 0 #c26a1e}.ds-accendi:focus-visible{outline:2px solid #ffa24a;outline-offset:3px}"
+    },
+    {
+      "name": "Pulsante di trasporto",
+      "kind": "button",
+      "refersTo": "button-trasporto",
+      "description": "Tutti, Mic e Prototipo nella barra.",
+      "html": "<button class=\"ds-trasporto\" aria-pressed=\"false\">Mic</button> <button class=\"ds-trasporto\" aria-pressed=\"true\">Tutti</button>",
+      "css": ".ds-trasporto{padding:9px 12px;font-family:\"Big Shoulders Stencil Display\",\"Helvetica Neue\",sans-serif;font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.04em;background:transparent;color:#f1ece2;border:1px solid rgba(241,236,226,.14);cursor:pointer}.ds-trasporto:hover{border-color:#c9bfb0}.ds-trasporto[aria-pressed=\"true\"]{background:#f1ece2;color:#0e0c0a;border-color:#f1ece2}.ds-trasporto:focus-visible{outline:2px solid #ffa24a;outline-offset:3px}"
+    },
+    {
+      "name": "Inquadrature",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Le tre viste della camera.",
+      "html": "<nav class=\"ds-viste\"><button>Mixer</button><button aria-pressed=\"true\">Sessione</button><button>Impianto</button></nav>",
+      "css": ".ds-viste{display:inline-flex;gap:2px;background:rgba(14,12,10,.72);padding:3px;border:1px solid rgba(241,236,226,.14)}.ds-viste button{background:transparent;border:0;padding:7px 14px 6px;cursor:pointer;font-family:\"Big Shoulders Stencil Display\",\"Helvetica Neue\",sans-serif;font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.04em;color:#c9bfb0}.ds-viste button:hover{color:#f1ece2}.ds-viste button[aria-pressed=\"true\"]{background:#f1ece2;color:#0e0c0a}"
+    },
+    {
+      "name": "Selettore del prototipo",
+      "kind": "chip",
+      "refersTo": "scelta-selettore",
+      "description": "Scelte fra le varianti del prototipo.",
+      "html": "<div class=\"ds-scelte\"><button aria-pressed=\"true\">semplice (-S)</button><button>completo</button></div>",
+      "css": ".ds-scelte{display:flex;flex-wrap:wrap;gap:3px;font-family:\"Big Shoulders Text\",\"Helvetica Neue\",sans-serif}.ds-scelte button{background:#1a1612;color:#f1ece2;border:1px solid rgba(241,236,226,.14);padding:5px 9px;cursor:pointer;font-size:14px}.ds-scelte button[aria-pressed=\"true\"]{background:#ffa24a;color:#0e0c0a;border-color:#ffa24a;font-weight:600}"
+    },
+    {
+      "name": "Deck",
+      "kind": "custom",
+      "refersTo": "deck",
+      "description": "Cella di un deck nella barra, con livello e corsa.",
+      "html": "<div class=\"ds-deck\"><span class=\"ds-num\">1</span><div><strong>Batteria</strong><span class=\"ds-tempo\">0:59 / 4:18</span></div><i class=\"ds-corsa\"></i></div>",
+      "css": ".ds-deck{position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:8px;padding:7px 9px 9px;background:#1a1612;color:#f1ece2;font-family:\"Big Shoulders Text\",\"Helvetica Neue\",sans-serif;width:240px}.ds-num{font-family:\"Big Shoulders Stencil Display\",\"Helvetica Neue\",sans-serif;font-weight:900;font-size:22px;color:#ffa24a;line-height:1}.ds-deck strong{display:block;font-weight:600;font-size:15px}.ds-tempo{display:block;font-size:13px;color:#c9bfb0;font-variant-numeric:tabular-nums}.ds-corsa{position:absolute;left:0;bottom:0;height:3px;width:24%;background:#ffa24a}"
+    },
+    {
+      "name": "Suggerimento",
+      "kind": "custom",
+      "refersTo": "suggerimento",
+      "description": "Nome e valore del comando toccato.",
+      "html": "<div class=\"ds-sugg\">GAIN +3,0 dB</div>",
+      "css": ".ds-sugg{display:inline-block;padding:6px 10px 5px;background:#f1ece2;color:#0e0c0a;font-family:\"Big Shoulders Text\",\"Helvetica Neue\",sans-serif;font-weight:600;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.45);font-variant-numeric:tabular-nums}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Il cortile di notte",
+    "overview": "La pagina è un luogo prima che un'interfaccia. Un cortile di mattoni, una lampada al sodio, uno stack a trombe e un mixer su un flight case riempiono tutto lo schermo. L'interfaccia HTML sta sopra la scena come il nastro adesivo su un flight case: poca, scritta a stencil, pensata per chi lavora al buio.\n\nIl lavoro vero avviene sul mixer 3D, con i comandi di Filippo. L'HTML serve solo a ciò che il mixer non fa: accendere, caricare i deck, cambiare inquadratura, scegliere le varianti del prototipo. Il primo sguardo è il cortile con una sola azione. La densità sale solo nella barra dei deck e nel pannello Prototipo.",
+    "keyCharacteristics": [
+      "Scena three.js a tutto schermo, con la pagina che non scorre mai",
+      "Una sola luce calda, il sodio, sia nella scena sia nell'interfaccia",
+      "Spigoli vivi ovunque, come metallo e legno da trasporto",
+      "Stencil per ciò che si legge da lontano, testo condensato per il resto",
+      "Solo tema scuro"
+    ],
+    "rules": [
+      {
+        "name": "The Una Lampada Rule",
+        "body": "Il cortile ha una sola sorgente calda. Un secondo accento nell'interfaccia non ha una luce che lo giustifichi. La luna fredda (0x7f8cff) resta nella scena.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stato Rule",
+        "body": "Il sodio segna ciò che è vivo o scelto nel lavoro al mixer, l'osso pieno segna il pulsante premuto di barra e inquadrature.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stencil Rule",
+        "body": "Lo stencil va solo in maiuscolo e solo su parole brevi. Una frase intera si scrive in Big Shoulders Text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Velo Rule",
+        "body": "Un pannello sopra la scena è fuliggine con alfa almeno 0,72 e un filo di bordo. Niente sfocatura dello sfondo: la scena è già pesante da disegnare.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** tieni il sodio come unico accento dell'interfaccia e fai combaciare ogni nuova luce calda con la sua tinta;",
+      "**Do** dai `text-shadow` a ogni testo posato sulla scena senza fondo;",
+      "**Do** usa veli di fuliggine con alfa almeno 0,72 per i pannelli sopra la scena;",
+      "**Do** lascia libero il centro dello schermo: lì sta il mixer;",
+      "**Do** rispetta `prefers-reduced-motion`, come fanno avvio e pulsante Accendi."
+    ],
+    "donts": [
+      "**Don't** arrotondare gli angoli degli elementi HTML;",
+      "**Don't** introdurre un tema chiaro: il contesto d'uso è la notte;",
+      "**Don't** usare `backdrop-filter`: la scena three.js consuma già la GPU;",
+      "**Don't** ricolorare pannelli, manopole o LED di Filippo;",
+      "**Don't** rinominare o tradurre i comandi del mixer;",
+      "**Don't** far scorrere la pagina: scorre solo il pannello Prototipo."
+    ]
+  }
+}

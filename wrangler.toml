@@ -1,0 +1,15 @@
+# Worker privato: hornsandbricks.stellakamikaze.org (account Cloudflare personale).
+# La password d'entrata è il secret PASSWORD: `wrangler secret put PASSWORD`, mai qui.
+name = "hornsandbricks"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = true
+
+[[routes]]
+pattern = "hornsandbricks.stellakamikaze.org"
+custom_domain = true
