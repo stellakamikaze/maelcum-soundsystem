@@ -1,6 +1,9 @@
 // Cancello d'entrata di hornsandbricks.stellakamikaze.org: una pagina chiede la password,
 // il Worker la confronta col secret PASSWORD e lascia un cookie di sessione firmato.
+// Dopo la password, /api/r/* inoltra le registrazioni delle sessioni (OpenReplay, solo col consenso del banner).
 // Tutto ciò che passa riceve COOP/COEP (il motore audio usa SharedArrayBuffer) e niente cache pubblica.
+
+import { sessioniProxy } from "./sessioni-proxy.js";
 
 const COOKIE = "hb_sessione";
 const enc = new TextEncoder();
@@ -87,6 +90,9 @@ export default {
     const cookie = req.headers.get("Cookie") || "";
     const valore = cookie.split(/;\s*/).find((c) => c.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1) || "";
     if (!uguali(valore, atteso)) return paginaAccesso(false, url.search);
+
+    const sessioni = await sessioniProxy(req);
+    if (sessioni) return sessioni;
 
     // Diagnosi (?diagnosi nella pagina): le misure finiscono nel log del Worker, lette con `wrangler tail`.
     if (url.pathname === "/diag" && req.method === "POST") {

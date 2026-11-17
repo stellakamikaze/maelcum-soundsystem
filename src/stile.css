@@ -39,6 +39,8 @@ body[data-scena="leggera"].accesa #scena { opacity: 1; }
 #avvio .sotto { display: block; font-family: var(--stencil); font-weight: 600; font-size: clamp(26px, 3.6vw, 48px); color: var(--sodio); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
 #avvio p { margin: 0 0 26px; font-size: 19px; line-height: 1.4; color: var(--osso-2); max-width: 44ch; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); }
 #avvio p.nota { margin: 18px 0 0; font-size: 15px; }
+#avvio p.nota + p.nota { margin-top: 8px; }
+#avvio p.nota a { color: var(--osso-2); }
 #accendi {
   font-family: var(--stencil); font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em;
   background: var(--sodio); color: var(--fuliggine); border: 0; padding: 16px 28px 14px; cursor: pointer;

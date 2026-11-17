@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "gen": "node scripts/gen2worklet.mjs",
-    "test": "node test/dsp.test.mjs && node --experimental-transform-types --no-warnings test/pedali.test.mjs && node --no-warnings test/vie.test.mjs && sh test/stem.test.sh",
+    "test": "node test/dsp.test.mjs && node --experimental-transform-types --no-warnings test/pedali.test.mjs && node --no-warnings test/vie.test.mjs && node test/worker.test.mjs && sh test/stem.test.sh",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4174",
