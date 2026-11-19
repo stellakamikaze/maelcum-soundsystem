@@ -20,11 +20,11 @@ custom_domain = true
 # POST /entra: 5 tentativi al minuto, poi 429.
 [[ratelimits]]
 name = "LIMITE_ENTRA"
-namespace_id = "4201"
+namespace_id = "4701"
 simple = { limit = 5, period = 60 }
 
 # /api/r (registrazioni delle sessioni): 120 richieste al minuto, poi 429.
 [[ratelimits]]
 name = "LIMITE_REGISTRAZIONI"
-namespace_id = "4202"
+namespace_id = "4702"
 simple = { limit = 120, period = 60 }
