@@ -56,8 +56,14 @@ function intestazioni(h, cache = "private, no-store") {
   h.set("Cache-Control", cache);
   h.set("X-Robots-Tag", "noindex, nofollow");
   h.set("Referrer-Policy", "no-referrer");
+  h.set("X-Content-Type-Options", "nosniff");
+  h.set("X-Frame-Options", "DENY");
+  h.set("Strict-Transport-Security", "max-age=31536000");
   return h;
 }
+
+// Pagina della password: niente script, solo lo stile in linea, il form verso sé stessa.
+const CSP_ACCESSO = "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'";
 
 function testo(status, corpo, extra = {}) {
   return new Response(corpo, { status, headers: intestazioni(new Headers({ "Content-Type": "text/plain; charset=utf-8", ...extra })) });
@@ -95,7 +101,7 @@ ${errore ? '<p class="errore" role="alert">Password sbagliata. Riprova.</p>' : "
 </form></main></body></html>`;
   return new Response(html, {
     status: errore ? 401 : 200,
-    headers: intestazioni(new Headers({ "Content-Type": "text/html; charset=utf-8" })),
+    headers: intestazioni(new Headers({ "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP_ACCESSO })),
   });
 }
 

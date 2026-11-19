@@ -24,6 +24,10 @@ const fuori = await worker.fetch(richiesta(), env);
 assert.equal(fuori.status, 200, "senza cookie torna la pagina della password");
 assert.match(await fuori.text(), /Password/);
 assert.equal(fuori.headers.get("cache-control"), "private, no-store");
+assert.match(fuori.headers.get("content-security-policy") || "", /default-src 'none'.*form-action 'self'.*frame-ancestors 'none'/);
+assert.equal(fuori.headers.get("x-content-type-options"), "nosniff");
+assert.equal(fuori.headers.get("x-frame-options"), "DENY");
+assert.match(fuori.headers.get("strict-transport-security") || "", /max-age=31536000/);
 assert.deepEqual(inoltrate, [], "senza password niente arriva a OpenReplay");
 
 // Password giusta: cookie "<scadenza>.<firma>" per 30 giorni.
