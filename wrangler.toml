@@ -16,7 +16,7 @@ pattern = "hornsandbricks.stellakamikaze.org"
 custom_domain = true
 
 # Limiti per IP (revisione del 19/11/2026). namespace_id è unico nell'account: 1001-1002 Arturo,
-# 1901-1902 neltuotelefono e dipping-for-goldfish, 3001-3004 Cornetta, 4101-4103 celestiale, 4301-4302 sei-ore.
+# 1901-1902 neltuotelefono e dipping-for-goldfish, 3001-3004 Cornetta, 4001-4003 computer-club, 4101-4102 ufficiofurore, 4201-4202 mediterranea, 4301-4302 sei-ore, 4601-4603 celestiale, 4701-4702 hornsandbricks.
 # POST /entra: 5 tentativi al minuto, poi 429.
 [[ratelimits]]
 name = "LIMITE_ENTRA"
