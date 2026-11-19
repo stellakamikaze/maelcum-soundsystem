@@ -1,5 +1,6 @@
 # Worker privato: hornsandbricks.stellakamikaze.org (account Cloudflare personale).
 # La password d'entrata è il secret PASSWORD: `wrangler secret put PASSWORD`, mai qui.
+# La chiave del cookie è il secret SEGRETO_COOKIE (openssl rand, da stdin): cambiarla fa rientrare tutti con la password.
 name = "hornsandbricks"
 main = "worker/index.js"
 compatibility_date = "2026-10-01"
@@ -13,3 +14,17 @@ run_worker_first = true
 [[routes]]
 pattern = "hornsandbricks.stellakamikaze.org"
 custom_domain = true
+
+# Limiti per IP (revisione del 19/11/2026). namespace_id è unico nell'account: 1001-1002 Arturo,
+# 1901-1902 neltuotelefono e dipping-for-goldfish, 3001-3004 Cornetta, 4101-4103 celestiale, 4301-4302 sei-ore.
+# POST /entra: 5 tentativi al minuto, poi 429.
+[[ratelimits]]
+name = "LIMITE_ENTRA"
+namespace_id = "4201"
+simple = { limit = 5, period = 60 }
+
+# /api/r (registrazioni delle sessioni): 120 richieste al minuto, poi 429.
+[[ratelimits]]
+name = "LIMITE_REGISTRAZIONI"
+namespace_id = "4202"
+simple = { limit = 120, period = 60 }
