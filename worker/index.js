@@ -1,11 +1,18 @@
 // Cancello d'entrata di hornsandbricks.stellakamikaze.org: una pagina chiede la password,
-// il Worker la confronta col secret PASSWORD e lascia un cookie di sessione firmato.
+// il Worker la confronta col secret PASSWORD e lascia un cookie di sessione firmato con scadenza.
 // Dopo la password, /api/r/* inoltra le registrazioni delle sessioni (OpenReplay, solo col consenso del banner).
 // Tutto ciò che passa riceve COOP/COEP (il motore audio usa SharedArrayBuffer) e niente cache pubblica.
+//
+// Secret (npx wrangler@4 secret put, da stdin):
+//   PASSWORD        la password d'entrata
+//   SEGRETO_COOKIE  chiave HMAC del cookie, separata dalla password (revisione del 19/11/2026)
+// Il cookie è "<scadenza>.<HMAC(SEGRETO_COOKIE, scadenza)>" e vale 30 giorni, come dipping-for-goldfish.
+// Binding [[ratelimits]] in wrangler.toml: LIMITE_ENTRA (5 tentativi al minuto per IP) e LIMITE_REGISTRAZIONI (/api/r).
 
 import { sessioniProxy } from "./sessioni-proxy.js";
 
 const COOKIE = "hb_sessione";
+const DURATA = 30 * 24 * 3600;
 const enc = new TextEncoder();
 
 async function firma(segreto, testo) {
@@ -21,13 +28,39 @@ function uguali(a, b) {
   return d === 0;
 }
 
-function intestazioni(h) {
+async function cookieNuovo(env) {
+  const scade = String(Math.floor(Date.now() / 1000) + DURATA);
+  return `${scade}.${await firma(env.SEGRETO_COOKIE, scade)}`;
+}
+
+async function cookieValido(req, env) {
+  const cookie = req.headers.get("Cookie") || "";
+  const valore = cookie.split(/;\s*/).find((c) => c.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1) || "";
+  const [scade, sig] = valore.split(".");
+  if (!scade || !sig || !/^\d+$/.test(scade) || Number(scade) < Date.now() / 1000) return false;
+  return uguali(sig, await firma(env.SEGRETO_COOKIE, scade));
+}
+
+// Cache: l'HTML mai (passa dal cancello), i file di Vite con l'impronta per un anno, audio e immagini per una
+// settimana. Sempre "private": stanno dietro la password e non devono finire nella cache di Cloudflare.
+export function cacheDi(pathname, contentType = "") {
+  if (contentType.startsWith("text/html")) return "private, no-store";
+  if (pathname.startsWith("/assets/")) return "private, max-age=31536000, immutable";
+  if (pathname.startsWith("/audio/") || pathname.startsWith("/img/")) return "private, max-age=604800";
+  return "private, no-cache";
+}
+
+function intestazioni(h, cache = "private, no-store") {
   h.set("Cross-Origin-Opener-Policy", "same-origin");
   h.set("Cross-Origin-Embedder-Policy", "require-corp");
-  h.set("Cache-Control", "private, no-store");
+  h.set("Cache-Control", cache);
   h.set("X-Robots-Tag", "noindex, nofollow");
   h.set("Referrer-Policy", "no-referrer");
   return h;
+}
+
+function testo(status, corpo, extra = {}) {
+  return new Response(corpo, { status, headers: intestazioni(new Headers({ "Content-Type": "text/plain; charset=utf-8", ...extra })) });
 }
 
 // "poi" è la coda dell'indirizzo chiesto (?diagnosi, ?qualita=…): dopo la password si torna lì.
@@ -69,16 +102,25 @@ ${errore ? '<p class="errore" role="alert">Password sbagliata. Riprova.</p>' : "
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
-    if (!env.PASSWORD) return new Response("Manca il secret PASSWORD", { status: 500 });
-    // "hornsandbricks-v1" è l'etichetta firmata nel cookie, non un segreto: la password sta nel secret PASSWORD.
-    const atteso = await firma(env.PASSWORD, "hornsandbricks-v1"); // gitleaks:allow
+    if (!env.PASSWORD || !env.SEGRETO_COOKIE) return new Response("Mancano i secret PASSWORD o SEGRETO_COOKIE", { status: 500 });
 
     if (url.pathname === "/entra" && req.method === "POST") {
-      const dati = await req.formData();
+      if (env.LIMITE_ENTRA) {
+        const { success } = await env.LIMITE_ENTRA.limit({ key: req.headers.get("CF-Connecting-IP") || "sconosciuto" });
+        if (!success) return testo(429, "Troppi tentativi. Riprova fra un minuto.\n", { "Retry-After": "60" });
+      }
+      let dati;
+      try {
+        dati = await req.formData();
+      } catch {
+        return testo(400, "Richiesta non valida.\n");
+      }
       const data = String(dati.get("password") || "");
-      if (!uguali(await firma(env.PASSWORD, data), await firma(env.PASSWORD, env.PASSWORD))) return paginaAccesso(true, String(dati.get("poi") || ""));
-      const h = intestazioni(new Headers({ Location: "/" + codaSicura(String(dati.get("poi") || "")) }));
-      h.append("Set-Cookie", `${COOKIE}=${atteso}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000`);
+      const poi = String(dati.get("poi") || "");
+      // Confronto a tempo costante: le due firme hanno sempre la stessa lunghezza.
+      if (!uguali(await firma(env.PASSWORD, data), await firma(env.PASSWORD, env.PASSWORD))) return paginaAccesso(true, poi);
+      const h = intestazioni(new Headers({ Location: "/" + codaSicura(poi) }));
+      h.append("Set-Cookie", `${COOKIE}=${await cookieNuovo(env)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${DURATA}`);
       return new Response(null, { status: 303, headers: h });
     }
     if (url.pathname === "/esci") {
@@ -87,11 +129,9 @@ export default {
       return new Response(null, { status: 303, headers: h });
     }
 
-    const cookie = req.headers.get("Cookie") || "";
-    const valore = cookie.split(/;\s*/).find((c) => c.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1) || "";
-    if (!uguali(valore, atteso)) return paginaAccesso(false, url.search);
+    if (!(await cookieValido(req, env))) return paginaAccesso(false, url.search);
 
-    const sessioni = await sessioniProxy(req);
+    const sessioni = await sessioniProxy(req, env);
     if (sessioni) return sessioni;
 
     // Diagnosi (?diagnosi nella pagina): le misure finiscono nel log del Worker, lette con `wrangler tail`.
@@ -101,6 +141,7 @@ export default {
     }
 
     const r = await env.ASSETS.fetch(req);
-    return new Response(r.body, { status: r.status, statusText: r.statusText, headers: intestazioni(new Headers(r.headers)) });
+    const h = intestazioni(new Headers(r.headers), cacheDi(url.pathname, r.headers.get("Content-Type") || ""));
+    return new Response(r.body, { status: r.status, statusText: r.statusText, headers: h });
   },
 };

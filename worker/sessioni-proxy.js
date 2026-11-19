@@ -4,9 +4,10 @@
 // inoltra a OpenReplay su Ganimede. Copia di proxy/worker.js del repo consenso.
 
 const ORIGINE = "https://replay.stellakamikaze.org/ingest";
-const TETTO = 5 * 1024 * 1024; // OpenReplay manda lotti di qualche centinaio di KB
+export const TETTO = 5 * 1024 * 1024; // OpenReplay manda lotti di qualche centinaio di KB
 
-export async function sessioniProxy(request) {
+// env.LIMITE_REGISTRAZIONI è il binding [[ratelimits]] di wrangler: 120 richieste al minuto per IP.
+export async function sessioniProxy(request, env = {}) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith("/api/r/")) return null;
   // Un % o un .. nel path (/api/r/..%2fapi/) portava la richiesta fuori da /ingest,
@@ -16,8 +17,19 @@ export async function sessioniProxy(request) {
   if (request.method !== "POST" && request.method !== "GET") {
     return new Response(null, { status: 405, headers: { allow: "GET, POST" } });
   }
+  const ip = request.headers.get("cf-connecting-ip");
+  if (env.LIMITE_REGISTRAZIONI) {
+    const { success } = await env.LIMITE_REGISTRAZIONI.limit({ key: ip || "senza-ip" });
+    if (!success) return new Response(null, { status: 429, headers: { "retry-after": "60" } });
+  }
+  // Il tetto vale sui byte che arrivano davvero: una richiesta chunked non ha content-length.
   const lunghezza = Number(request.headers.get("content-length") || 0);
   if (lunghezza > TETTO) return new Response(null, { status: 413 });
+  let corpo;
+  if (request.method === "POST") {
+    corpo = await leggiConTetto(request.body, TETTO);
+    if (corpo === null) return new Response(null, { status: 413 });
+  }
 
   const destinazione = ORIGINE + url.pathname.slice("/api/r".length) + url.search;
   const headers = new Headers();
@@ -26,13 +38,12 @@ export async function sessioniProxy(request) {
     if (v) headers.set(h, v);
   }
   // L'IP serve a OpenReplay per ricavare paese e città della sessione.
-  const ip = request.headers.get("cf-connecting-ip");
   if (ip) headers.set("x-forwarded-for", ip);
   try {
     const r = await fetch(destinazione, {
       method: request.method,
       headers,
-      body: request.method === "POST" ? request.body : undefined,
+      body: corpo,
     });
     const fuori = new Headers();
     for (const h of ["content-type", "content-encoding"]) {
@@ -44,4 +55,29 @@ export async function sessioniProxy(request) {
   } catch {
     return new Response(null, { status: 502 });
   }
+}
+
+/** Legge il corpo fino a `tetto` byte. Oltre il tetto smette di leggere e restituisce null. */
+export async function leggiConTetto(flusso, tetto) {
+  if (!flusso) return new Uint8Array(0);
+  const lettore = flusso.getReader();
+  const pezzi = [];
+  let totale = 0;
+  for (;;) {
+    const { done, value } = await lettore.read();
+    if (done) break;
+    totale += value.byteLength;
+    if (totale > tetto) {
+      await lettore.cancel().catch(() => {});
+      return null;
+    }
+    pezzi.push(value);
+  }
+  const corpo = new Uint8Array(totale);
+  let posizione = 0;
+  for (const pezzo of pezzi) {
+    corpo.set(pezzo, posizione);
+    posizione += pezzo.byteLength;
+  }
+  return corpo;
 }
